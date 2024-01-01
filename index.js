@@ -16,9 +16,9 @@ async function generateLogo() {
     },
     {
       type: 'list',
-      name: 'shape',
+      name: 'shapeType',
       message: 'Choose a shape:',
-      choices: ['Circle', 'Triangle', 'Square'],
+      choices: ['Triangle', 'Circle', 'Square'],
     },
     {
       type: 'input',
@@ -28,7 +28,7 @@ async function generateLogo() {
   ]);
 
   let shape;
-  switch (userInput.shape) {
+  switch (userInput.shapeType) {
     case 'Circle':
       shape = new Circle();
       break;
@@ -44,9 +44,18 @@ async function generateLogo() {
 
   shape.setColor(userInput.shapeColor);
 
-  const svgContent = `<svg width="300" height="200">${shape.render()}</svg>`;
-  const fileName = 'logo.svg';
+  // Calculate an appropriate font size based on the shape dimensions
+  const shapeSize = Math.min(300, 200); // Assuming the SVG canvas size is 300x200
+  const fontSize = shapeSize / 3;
 
+  const svgContent = `
+    <svg width="300" height="200">
+      ${shape.render()}
+      <text x="50%" y="50%" fill="${userInput.textColor}" font-size="${fontSize}" text-anchor="middle" alignment-baseline="middle">${userInput.text}</text>
+    </svg>
+  `;
+
+  const fileName = 'logo.svg';
   writeSvgToFile(svgContent, fileName);
 
   console.log(`Generated ${fileName}`);
