@@ -30,7 +30,7 @@ async function generateLogo() {
     },
   ]);
 
-  // Create the appropriate shape object based on user input
+  // Create the appropriate shape based on user input
   let shape;
   switch (userInput.shapeType) {
     case 'Circle':
@@ -43,15 +43,16 @@ async function generateLogo() {
       shape = new Square();
       break;
     default:
-      // Handle an invalid shape choice
+      
       throw new Error('Invalid shape');
   }
 
-  // Set the color for the chosen shape
+  // Set color chosen shape
   shape.setColor(userInput.shapeColor);
 
-  // Calculate size-related values for the logo
-  const shapeSize = Math.min(300, 200); // Assuming the SVG canvas size is 300x200
+  // Calculate size values for the logo
+  const shapeSize = Math.min(300, 200);
+  // Specify triangle font size to fit in logo
   const fontSize = userInput.shapeType === 'Triangle' ? 55 : shapeSize / 3;
 
   // Adjust vertical position for text in Triangle
@@ -69,12 +70,12 @@ async function generateLogo() {
   // Specify the filename for the generated SVG file
   const fileName = 'logo.svg';
 
-  // Write the SVG content to a file
+  // Write SVG content to a file
   writeSvgToFile(svgContent, fileName);
 
   // Provide feedback to the user
   console.log(`Generated ${fileName}`);
 }
 
-// Call the function to generate the logo
+// Call function 
 generateLogo();
